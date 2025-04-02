@@ -1,3 +1,5 @@
+from typing import List, Optional
+
 from passlib.context import CryptContext
 
 from application.dto.users import UserCreateDTO
@@ -23,3 +25,9 @@ class UserService:
             hashed_password=hashed_password
         )
         return self.repository.add(user)
+
+    def get_all_users(self) -> List[User]:
+        return self.repository.find_all()
+
+    def get_user_by_id(self, user_id: int) -> Optional[User]:
+        return self.repository.get_by_id(user_id)
