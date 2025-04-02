@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from sqlmodel import select
 from domain.models.users import User
@@ -17,3 +17,9 @@ class SQLModelUserRepository(UserRepository):
             session.commit()
             session.refresh(user)
             return user
+
+    def find_all(self) -> List[User]:
+        with database.get_session() as session:
+            statement = select(User)
+            results = session.exec(statement)
+            return results.all()
